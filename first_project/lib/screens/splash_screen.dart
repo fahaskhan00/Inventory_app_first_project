@@ -7,13 +7,10 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() =>
-      _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState
-    extends State<SplashScreen> {
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -22,43 +19,33 @@ class _SplashScreenState
   }
 
   Future<void> checkIntro() async {
-
     final box = Hive.box('appBox');
 
-    final introShown =
-        box.get('introShown') ?? false;
+    final introShown = box.get('introShown') ?? false;
 
-    Future.delayed(
-      const Duration(seconds: 4),
+    Future.delayed(const Duration(seconds: 4), () {
+      Navigator.pushReplacement(
+        context,
 
-      () {
-
-        Navigator.pushReplacement(
-          context,
-
-          MaterialPageRoute(
-            builder:
-                (context) =>
-                    introShown
-                        ? const HomeScreen()
-                        : const IntroScreen(),
-          ),
-        );
-      },
-    );
+        MaterialPageRoute(
+          builder:
+              (context) =>
+                  introShown ? const HomeScreen() : const IntroScreen(),
+        ),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
 
       body: Center(
-        child:  const CircularProgressIndicator(
-      color: Color(0xFFFF8C42),
-      strokeWidth: 3,
-    ),
+        child: const CircularProgressIndicator(
+          color: Color(0xFFFF8C42),
+          strokeWidth: 3,
+        ),
       ),
     );
   }

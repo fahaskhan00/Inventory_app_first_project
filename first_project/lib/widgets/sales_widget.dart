@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget glassContainer({
-  required Widget child,
-  EdgeInsets? margin,
-}) {
+Widget glassContainer({required Widget child, EdgeInsets? margin}) {
   return Container(
     margin: margin,
     padding: const EdgeInsets.all(18),
@@ -36,7 +33,6 @@ Widget buildStatCard({
       crossAxisAlignment: CrossAxisAlignment.start,
 
       children: [
-
         Container(
           padding: const EdgeInsets.all(10),
 
@@ -46,11 +42,7 @@ Widget buildStatCard({
             borderRadius: BorderRadius.circular(14),
           ),
 
-          child: Icon(
-            icon,
-            color: const Color(0xFFFF8C42),
-            size: 24,
-          ),
+          child: Icon(icon, color: const Color(0xFFFF8C42), size: 24),
         ),
 
         const SizedBox(height: 16),

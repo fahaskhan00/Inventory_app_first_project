@@ -12,14 +12,9 @@ class CustomSnackBar {
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            gradient: LinearGradient(
-              colors: [Colors.redAccent, Colors.red],
-            ),
+            gradient: LinearGradient(colors: [Colors.redAccent, Colors.red]),
             boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 8,
-              ),
+              BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8),
             ],
           ),
           child: Row(

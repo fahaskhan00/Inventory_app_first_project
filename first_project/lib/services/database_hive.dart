@@ -30,7 +30,7 @@ class DatabaseApp {
     return categoryBox.listenable();
   }
 
-  int getCategoryCount() {                                                                                      
+  int getCategoryCount() {
     return categoryBox.length;
   }
 

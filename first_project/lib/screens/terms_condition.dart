@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/terms_condition_widget.dart';
 
-
 class TermsScreen extends StatelessWidget {
   const TermsScreen({super.key});
 
@@ -14,10 +13,7 @@ class TermsScreen extends StatelessWidget {
         elevation: 0,
         title: const Text(
           "Terms & Conditions",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),

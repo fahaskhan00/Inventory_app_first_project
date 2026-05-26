@@ -6,32 +6,23 @@ class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() =>
-      _SettingsScreenState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState
-    extends State<SettingsScreen> {
-
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor:
-          const Color(0xFFF7F8FA),
+      backgroundColor: const Color(0xFFF7F8FA),
 
       appBar: AppBar(
-        backgroundColor:
-            Colors.transparent,
+        backgroundColor: Colors.transparent,
 
         elevation: 0,
 
         centerTitle: true,
 
-        iconTheme:
-            const IconThemeData(
-          color: Colors.black,
-        ),
+        iconTheme: const IconThemeData(color: Colors.black),
 
         title: const Text(
           'Settings',
@@ -49,24 +40,17 @@ class _SettingsScreenState
 
         child: Column(
           children: [
-
             /// TERMS
             settingTile(
-              title:
-                  "Terms & Conditions",
+              title: "Terms & Conditions",
 
-              icon:
-                  Icons.description_rounded,
+              icon: Icons.description_rounded,
 
               onTap: () {
-
                 Navigator.push(
                   context,
 
-                  MaterialPageRoute(
-                    builder:
-                        (_) => TermsScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => TermsScreen()),
                 );
               },
             ),
@@ -77,19 +61,13 @@ class _SettingsScreenState
             settingTile(
               title: "Privacy Policy",
 
-              icon:
-                  Icons.privacy_tip_rounded,
+              icon: Icons.privacy_tip_rounded,
 
               onTap: () {
-
                 Navigator.push(
                   context,
 
-                  MaterialPageRoute(
-                    builder:
-                        (_) =>
-                            PrivacyPolicyScreen(),
-                  ),
+                  MaterialPageRoute(builder: (_) => PrivacyPolicyScreen()),
                 );
               },
             ),
@@ -104,7 +82,6 @@ class _SettingsScreenState
     required IconData icon,
     required VoidCallback onTap,
   }) {
-
     return GestureDetector(
       onTap: onTap,
 
@@ -114,49 +91,31 @@ class _SettingsScreenState
         decoration: BoxDecoration(
           color: Colors.white,
 
-          borderRadius:
-              BorderRadius.circular(22),
+          borderRadius: BorderRadius.circular(22),
 
           boxShadow: [
             BoxShadow(
-              color: Colors.orange
-                  .withOpacity(0.08),
+              color: Colors.orange.withOpacity(0.08),
 
               blurRadius: 14,
 
-              offset:
-                  const Offset(0, 6),
+              offset: const Offset(0, 6),
             ),
           ],
         ),
 
         child: Row(
           children: [
-
             Container(
-              padding:
-                  const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
 
               decoration: BoxDecoration(
-                color:
-                    const Color(
-                  0xFFFFF3E8,
-                ),
+                color: const Color(0xFFFFF3E8),
 
-                borderRadius:
-                    BorderRadius.circular(
-                  14,
-                ),
+                borderRadius: BorderRadius.circular(14),
               ),
 
-              child: Icon(
-                icon,
-
-                color:
-                    const Color(
-                  0xFFFF8C42,
-                ),
-              ),
+              child: Icon(icon, color: const Color(0xFFFF8C42)),
             ),
 
             const SizedBox(width: 14),
@@ -168,8 +127,7 @@ class _SettingsScreenState
                 style: const TextStyle(
                   color: Colors.black,
 
-                  fontWeight:
-                      FontWeight.w600,
+                  fontWeight: FontWeight.w600,
 
                   fontSize: 15,
                 ),
@@ -179,8 +137,7 @@ class _SettingsScreenState
             Icon(
               Icons.arrow_forward_ios_rounded,
 
-              color:
-                  Colors.grey.shade500,
+              color: Colors.grey.shade500,
 
               size: 18,
             ),

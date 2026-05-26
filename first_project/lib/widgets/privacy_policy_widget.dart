@@ -8,10 +8,7 @@ class PrivacyPolicyContent extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Color(0xFF0D0D0D),
-            Color(0xFF1A1A1A),
-          ],
+          colors: [Color(0xFF0D0D0D), Color(0xFF1A1A1A)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -22,7 +19,6 @@ class PrivacyPolicyContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               _sectionTitle("Last updated"),
               _sectionText("May 02, 2026"),
 
@@ -31,7 +27,7 @@ class PrivacyPolicyContent extends StatelessWidget {
               _sectionTitle("Overview"),
               _sectionText(
                 "This Privacy Policy describes how we collect, use, and protect your information when using the Myinvontory application. "
-                "By using the app, you agree to this policy."
+                "By using the app, you agree to this policy.",
               ),
 
               const SizedBox(height: 20),
@@ -46,7 +42,7 @@ class PrivacyPolicyContent extends StatelessWidget {
 
               _sectionTitle("Usage Data"),
               _sectionText(
-                "We collect data such as IP address, browser type, time spent, and pages visited to improve user experience."
+                "We collect data such as IP address, browser type, time spent, and pages visited to improve user experience.",
               ),
 
               const SizedBox(height: 20),
@@ -54,7 +50,7 @@ class PrivacyPolicyContent extends StatelessWidget {
               _sectionTitle("Permissions"),
               _sectionText(
                 "We may request access to camera and photos to provide features. "
-                "You can disable this anytime in device settings."
+                "You can disable this anytime in device settings.",
               ),
 
               const SizedBox(height: 20),
@@ -69,35 +65,35 @@ class PrivacyPolicyContent extends StatelessWidget {
 
               _sectionTitle("Data Sharing"),
               _sectionText(
-                "We may share data with service providers or legal authorities when required."
+                "We may share data with service providers or legal authorities when required.",
               ),
 
               const SizedBox(height: 20),
 
               _sectionTitle("Data Retention"),
               _sectionText(
-                "We retain your data only as long as necessary, typically up to 24 months depending on usage."
+                "We retain your data only as long as necessary, typically up to 24 months depending on usage.",
               ),
 
               const SizedBox(height: 20),
 
               _sectionTitle("Security"),
               _sectionText(
-                "We take reasonable steps to protect your data but cannot guarantee 100% security."
+                "We take reasonable steps to protect your data but cannot guarantee 100% security.",
               ),
 
               const SizedBox(height: 20),
 
               _sectionTitle("Children's Privacy"),
               _sectionText(
-                "Our service is not intended for users under 16 years of age."
+                "Our service is not intended for users under 16 years of age.",
               ),
 
               const SizedBox(height: 20),
 
               _sectionTitle("Changes"),
               _sectionText(
-                "We may update this policy anytime. Continued use means acceptance."
+                "We may update this policy anytime. Continued use means acceptance.",
               ),
 
               const SizedBox(height: 20),
@@ -148,10 +144,7 @@ class PrivacyPolicyContent extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(
-                color: Colors.white70,
-                fontSize: 14,
-              ),
+              style: const TextStyle(color: Colors.white70, fontSize: 14),
             ),
           ),
         ],

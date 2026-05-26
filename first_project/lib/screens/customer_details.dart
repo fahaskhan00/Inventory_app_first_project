@@ -1,334 +1,170 @@
 import 'package:flutter/material.dart';
-import '../models/item_model.dart';
-import 'sales_summary_screen.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/colors/app_colors.dart';
+import 'package:flutter_application_1/models/item_model.dart';
+import 'bill_preview_screen.dart';
+import 'package:flutter_application_1/widgets/customer_details_widget/appbar.dart';
+import 'package:flutter_application_1/widgets/customer_details_widget/header.dart';
+import 'package:flutter_application_1/widgets/customer_details_widget/textfield.dart';
+import 'package:flutter_application_1/widgets/customer_details_widget/continue_button.dart';
 
 class CustomerDetailsScreen extends StatefulWidget {
   final List<ItemModel> selectedItems;
 
-  const CustomerDetailsScreen({super.key, required this.selectedItems});
+  final List updatedItems;
+
+  final double total;
+
+  const CustomerDetailsScreen({
+    super.key,
+    required this.selectedItems,
+    required this.updatedItems,
+    required this.total,
+  });
 
   @override
   State<CustomerDetailsScreen> createState() => _CustomerDetailsScreenState();
 }
 
 class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
+  // NAME CONTROLLER
   final TextEditingController nameController = TextEditingController();
 
+  // PHONE CONTROLLER
   final TextEditingController phoneController = TextEditingController();
 
-  final TextEditingController addressController = TextEditingController();
-
-  final TextEditingController salePriceController = TextEditingController();
-
+  // FORM KEY
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     nameController.dispose();
+
     phoneController.dispose();
-    addressController.dispose();
-    salePriceController.dispose();
+
     super.dispose();
   }
 
-  void continueToSummary() {
+  // CONTINUE TO BILL PREVIEW
+  void continueToBillPreview() {
     if (formKey.currentState!.validate()) {
       Navigator.push(
         context,
+
         MaterialPageRoute(
           builder:
-              (context) => SalesSummaryScreen(
-                selectedItems: widget.selectedItems,
+              (context) => BillPreviewScreen(
+                items: widget.updatedItems,
+
+                total: widget.total,
 
                 customerName: nameController.text.trim(),
 
                 customerPhone: phoneController.text.trim(),
-
-                customerAddress: addressController.text.trim(),
-
-                customerSalePrice: salePriceController.text.trim(),
               ),
         ),
       );
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF7F8FA),
+  // APP BAR
+  PreferredSizeWidget buildAppBar() {
+    return const CustomerDetailsAppBar();
+  }
 
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+  // HEADER
+  Widget buildHeader() {
+    return const CustomerHeader();
+  }
 
-        centerTitle: true,
+  // NAME FIELD
+  Widget buildNameField() {
+    return CustomerTextField(
+      controller: nameController,
 
-        iconTheme: const IconThemeData(color: Colors.black),
+      hint: "Customer Name",
 
-        title: const Text(
-          "Customer Details",
+      icon: Icons.person_outline,
+    );
+  }
 
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-      ),
+  // PHONE FIELD
+  Widget buildPhoneField() {
+    return CustomerTextField(
+      controller: phoneController,
 
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+      hint: "Phone Number",
 
-        child: Form(
-          key: formKey,
+      icon: Icons.phone_outlined,
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      keyboardType: TextInputType.number,
 
-            children: [
-              const SizedBox(height: 20),
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
 
-              const Text(
-                "Add Customer",
+        LengthLimitingTextInputFormatter(10),
+      ],
 
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFFFF8C42),
-                ),
-              ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Required field";
+        }
 
-              const SizedBox(height: 10),
+        if (value.length < 10) {
+          return "Enter 10 digit number";
+        }
 
-              buildTextField(
-                controller: nameController,
+        return null;
+      },
+    );
+  }
 
-                hint: "Customer Name",
+  // CONTINUE BUTTON
+  Widget buildContinueButton() {
+    return ContinueButton(onTap: continueToBillPreview);
+  }
 
-                icon: Icons.person_outline,
-              ),
+  // BODY
+  Widget buildBody() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
 
-              const SizedBox(height: 20),
-TextFormField(
-  controller: phoneController,
+      child: Form(
+        key: formKey,
 
-  keyboardType: TextInputType.number,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
 
-  inputFormatters: [
-    FilteringTextInputFormatter.digitsOnly,
-    LengthLimitingTextInputFormatter(10),
-  ],
+          children: [
+            const SizedBox(height: 20),
 
-  validator: (value) {
+            buildHeader(),
 
-    if (value == null ||
-        value.isEmpty) {
+            const SizedBox(height: 10),
 
-      return "Required field";
-    }
+            buildNameField(),
 
-    if (value.length < 10) {
-      return "Enter 10 digit number";
-    }
+            const SizedBox(height: 20),
 
-    return null;
-  },
+            buildPhoneField(),
 
-  decoration: InputDecoration(
-    labelText: "Phone Number",
+            const SizedBox(height: 40),
 
-    hintText: "Phone Number",
-
-    labelStyle: const TextStyle(
-      color: Color(0xFFFF8C42),
-      fontWeight: FontWeight.w600,
-    ),
-
-    prefixIcon: const Icon(
-      Icons.phone_outlined,
-      color: Color(0xFFFF8C42),
-    ),
-
-    filled: true,
-    fillColor: Colors.white,
-
-    border: OutlineInputBorder(
-      borderRadius:
-          BorderRadius.circular(18),
-  borderSide: BorderSide.none
-     
-    ),
-
-    enabledBorder: OutlineInputBorder(
-      borderRadius:
-          BorderRadius.circular(18),
-
-      borderSide: BorderSide.none
-    ),
-
-    focusedBorder: OutlineInputBorder(
-      borderRadius:
-          BorderRadius.circular(18),
-
-      borderSide: const BorderSide(
-        color: Color(0xFFFF8C42),
-        width: 1.5,
-      ),
-    ),
-  ),
-),
-
-              const SizedBox(height: 20),
-
-              buildTextField(
-                controller: addressController,
-                hint: "Customer Address",
-                icon: Icons.location_on_outlined,
-                maxLines: 4,
-              ),
-
-              const SizedBox(height: 20),
-
-             TextFormField(
-  controller: salePriceController,
-
-  keyboardType: TextInputType.number,
-
-  inputFormatters: [
-    FilteringTextInputFormatter.digitsOnly,
-  ],
-
-  decoration: InputDecoration(
-    labelText: "Customer Sale Price",
-
-    hintText: "Customer Sales Price  (optional)", hintStyle: TextStyle(color: const Color.fromARGB(255, 145, 152, 158)),
-
-    labelStyle: const TextStyle(
-      color: Color(0xFFFF8C42),
-      fontWeight: FontWeight.w600,
-    ),
-
-    prefixIcon: const Icon(
-      Icons.currency_rupee,
-      color: Color(0xFFFF8C42),
-    ),
-
-    filled: true,
-    fillColor: Colors.white,
-
-    border: OutlineInputBorder(
-      borderRadius:
-          BorderRadius.circular(18),
-
-      borderSide: BorderSide.none,
-    ),
-
-    enabledBorder: OutlineInputBorder(
-      borderRadius:
-          BorderRadius.circular(18),
-
-      borderSide: BorderSide.none,
-    ),
-
-    focusedBorder: OutlineInputBorder(
-      borderRadius:
-          BorderRadius.circular(18),
-
-      borderSide: const BorderSide(
-        color: Color(0xFFFF8C42),
-        width: 1.5,
-      ),
-    ),
-  ),
-),
-
-              const SizedBox(height: 40),
-
-              SizedBox(
-                width: double.infinity,
-                height: 58,
-
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF8C42),
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                  ),
-
-                  onPressed: continueToSummary,
-
-                  child: const Text(
-                    "Continue",
-
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            buildContinueButton(),
+          ],
         ),
       ),
     );
   }
 
-  Widget buildTextField({
-    required TextEditingController controller,
-    required String hint,
-    required IconData icon,
-    int maxLines = 1,
-    TextInputType? keyboardType,
-  }) {
-    return TextFormField(
-      controller: controller,
-      maxLines: maxLines,
-      keyboardType: keyboardType,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
 
-      validator: (value) {
-        if (hint != "Customer Sale Price") {
-          if (value == null || value.isEmpty) {
-            return "Required field";
-          }
-        }
+      appBar: buildAppBar(),
 
-        return null;
-      },
-
-      decoration: InputDecoration(
-        labelText: hint,
-
-        hintText: hint,
-
-        labelStyle: const TextStyle(
-          color: Color(0xFFFF8C42),
-          fontWeight: FontWeight.w600,
-        ),
-
-        prefixIcon: Icon(icon, color: const Color(0xFFFF8C42)),
-
-        filled: true,
-        fillColor: Colors.white,
-
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-
-          borderSide: BorderSide.none,
-        ),
-
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-
-          borderSide: BorderSide.none,
-        ),
-
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-
-          borderSide: const BorderSide(color: Color(0xFFFF8C42), width: 1.5),
-        ),
-      ),
+      body: buildBody(),
     );
   }
 }

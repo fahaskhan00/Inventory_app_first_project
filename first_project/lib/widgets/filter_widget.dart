@@ -7,22 +7,16 @@ Widget dragHandle() {
 
     decoration: BoxDecoration(
       color: Colors.grey.shade300,
-
-      borderRadius:
-          BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(10),
     ),
   );
 }
 
-Widget header({
-  required VoidCallback onClose,
-}) {
+Widget header({required VoidCallback onClose}) {
   return Row(
-    mainAxisAlignment:
-        MainAxisAlignment.spaceBetween,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
     children: [
-
       const SizedBox(width: 20),
 
       const Text(
@@ -38,10 +32,7 @@ Widget header({
       GestureDetector(
         onTap: onClose,
 
-        child: const Icon(
-          Icons.close,
-          color: Colors.black,
-        ),
+        child: const Icon(Icons.close, color: Colors.black),
       ),
     ],
   );
@@ -49,8 +40,7 @@ Widget header({
 
 Widget sectionTitle(String text) {
   return Padding(
-    padding:
-        const EdgeInsets.only(bottom: 12),
+    padding: const EdgeInsets.only(bottom: 12),
 
     child: Text(
       text,
@@ -73,76 +63,47 @@ Widget chipWrap({
     spacing: 10,
     runSpacing: 10,
 
-    children: List.generate(
-      list.length,
+    children: List.generate(list.length, (index) {
+      final isSelected = selectedIndex == index;
 
-      (index) {
+      return GestureDetector(
+        onTap: () => onTap(index),
 
-        final isSelected =
-            selectedIndex == index;
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
 
-        return GestureDetector(
-          onTap: () => onTap(index),
+          decoration: BoxDecoration(
+            color: isSelected ? const Color(0xFFFF8C42) : Colors.white,
 
-          child: Container(
-            padding:
-                const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
+            borderRadius: BorderRadius.circular(22),
 
-            decoration: BoxDecoration(
-
+            border: Border.all(
               color:
-                  isSelected
-                      ? const Color(
-                        0xFFFF8C42,
-                      )
-                      : Colors.white,
-
-              borderRadius:
-                  BorderRadius.circular(
-                22,
-              ),
-
-              border: Border.all(
-                color:
-                    isSelected
-                        ? const Color(
-                          0xFFFF8C42,
-                        )
-                        : Colors.grey.shade300,
-              ),
-
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.orange
-                      .withOpacity(0.06),
-
-                  blurRadius: 8,
-
-                  offset:
-                      const Offset(0, 3),
-                ),
-              ],
+                  isSelected ? const Color(0xFFFF8C42) : Colors.grey.shade300,
             ),
 
-            child: Text(
-              list[index],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.orange.withOpacity(0.06),
 
-              style: TextStyle(
-                color:
-                    isSelected
-                        ? Colors.white
-                        : Colors.black,
+                blurRadius: 8,
 
-                fontWeight:
-                    FontWeight.w600,
+                offset: const Offset(0, 3),
               ),
+            ],
+          ),
+
+          child: Text(
+            list[index],
+
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black,
+
+              fontWeight: FontWeight.w600,
             ),
           ),
-        );
-      },
-    ),
+        ),
+      );
+    }),
   );
 }

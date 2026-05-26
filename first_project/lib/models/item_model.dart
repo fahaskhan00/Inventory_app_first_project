@@ -1,12 +1,11 @@
 class ItemModel {
   final String name;
-   String category;
+  String category;
   final int price;
   final int quantity;
   final List<String> images;
   final String notes;
   String? salePrice;
-  
 
   ItemModel({
     this.salePrice,
@@ -18,20 +17,17 @@ class ItemModel {
     required this.notes,
   });
 
-  
   factory ItemModel.fromMap(Map<String, dynamic> item) {
     return ItemModel(
-      
       name: item['name'] ?? '',
       category: item['category'] ?? '',
       price: int.tryParse(item['price'].toString()) ?? 0,
       quantity: int.tryParse(item['quantity'].toString()) ?? 0,
       images: List<String>.from(item['images'] ?? []),
-     salePrice: item['salePrice'] ?? '',
+      salePrice: item['salePrice'] ?? '',
       notes: item['notes'] ?? '',
     );
   }
-
 
   Map<String, dynamic> toMap() {
     return {
@@ -41,7 +37,7 @@ class ItemModel {
       'price': price,
       'quantity': quantity,
       'images': images,
-      'notes': notes, 
+      'notes': notes,
     };
   }
 }

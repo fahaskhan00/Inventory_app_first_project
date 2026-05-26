@@ -12,7 +12,7 @@ class EditItemController {
   final descController = TextEditingController();
 
   int quantity = 1;
-  String category = "";
+  String category = ""; 
   List<File> images = [];
 
   final picker = ImagePicker();
@@ -52,7 +52,7 @@ class EditItemController {
       quantity: quantity,
       category: category,
       images: images.map((e) => e.path).toList(),
-      notes: descController.text
+      notes: descController.text,
     );
 
     db.updateItem(index, updatedItem);

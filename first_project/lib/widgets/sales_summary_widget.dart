@@ -8,10 +8,10 @@ Widget saleItemTile({
   required int qty,
   required int stock,
   required VoidCallback onRemove,
-  
+
   required VoidCallback onAdd,
   required VoidCallback onDelete,
-required Function(int) onQtyChanged,
+  required Function(int) onQtyChanged,
 }) {
   return Container(
     margin: const EdgeInsets.only(bottom: 16),
@@ -35,7 +35,6 @@ required Function(int) onQtyChanged,
       crossAxisAlignment: CrossAxisAlignment.center,
 
       children: [
-
         /// IMAGE
         Container(
           width: 70,
@@ -49,9 +48,7 @@ required Function(int) onQtyChanged,
             image:
                 item.images.isNotEmpty
                     ? DecorationImage(
-                      image: FileImage(
-                        File(item.images[0]),
-                      ),
+                      image: FileImage(File(item.images[0])),
                       fit: BoxFit.cover,
                     )
                     : null,
@@ -63,11 +60,9 @@ required Function(int) onQtyChanged,
         /// DETAILS
         Expanded(
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
 
             children: [
-
               Text(
                 item.name,
 
@@ -98,10 +93,7 @@ required Function(int) onQtyChanged,
               Text(
                 "Available: $stock",
 
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
               ),
 
               const SizedBox(height: 12),
@@ -109,85 +101,59 @@ required Function(int) onQtyChanged,
               /// QTY BUTTONS
               Row(
                 children: [
+                  qtyBtn(Icons.remove, onRemove),
 
-                  qtyBtn(
-                    Icons.remove,
-                    onRemove,
+                  const SizedBox(width: 12),
+
+                  SizedBox(
+                    width: 55,
+
+                    height: 38,
+
+                    child: TextFormField(
+                      controller: TextEditingController(text: qty.toString()),
+
+                      keyboardType: TextInputType.number,
+
+                      textAlign: TextAlign.center,
+
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.zero,
+
+                        filled: true,
+
+                        fillColor: const Color(0xFFFFF3E8),
+
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+
+                      onChanged: (value) {
+                        final number = int.tryParse(value);
+
+                        if (number != null) {
+                          if (number <= stock && number > 0) {
+                            onQtyChanged(number);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Only $stock items available"),
+
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    ),
                   ),
 
                   const SizedBox(width: 12),
 
-                 SizedBox(
-  width: 55,
-
-  height: 38,
-
-  child: TextFormField(
-
-    controller: TextEditingController(
-  text: qty.toString(),
-),
-
-    keyboardType:
-        TextInputType.number,
-
-    textAlign: TextAlign.center,
-
-    decoration: InputDecoration(
-      contentPadding:
-          EdgeInsets.zero,
-
-      filled: true,
-
-      fillColor:
-          const Color(0xFFFFF3E8),
-
-      border: OutlineInputBorder(
-        borderRadius:
-            BorderRadius.circular(10),
-
-        borderSide: BorderSide.none,
-      ),
-    ),
-
-    onChanged: (value) {
-
-      final number =
-          int.tryParse(value);
-
-      if (number != null) {
-
-        if (number <= stock &&
-            number > 0) {
-
-        onQtyChanged(number);
-        } else {
-
-         ScaffoldMessenger.of(
-  context,
-).showSnackBar(
-            SnackBar(
-              content: Text(
-                "Only $stock items available",
-              ),
-
-              backgroundColor:
-                  Colors.red,
-            ),
-          );
-        }
-      }
-    },
-  ),
-),
-
-                  const SizedBox(width: 12),
-
-               if (qty < stock)
-  qtyBtn(
-    Icons.add,
-    onAdd,
-  ),
+                  if (qty < stock) qtyBtn(Icons.add, onAdd),
                 ],
               ),
             ],
@@ -196,10 +162,7 @@ required Function(int) onQtyChanged,
 
         /// DELETE BUTTON
         IconButton(
-          icon: Icon(
-            Icons.delete_outline,
-            color: Colors.grey.shade500,
-          ),
+          icon: Icon(Icons.delete_outline, color: Colors.grey.shade500),
 
           onPressed: onDelete,
         ),
@@ -208,9 +171,7 @@ required Function(int) onQtyChanged,
   );
 }
 
-Widget totalCard({
-  required Widget child,
-}) {
+Widget totalCard({required Widget child}) {
   return Container(
     padding: const EdgeInsets.all(20),
 
@@ -234,10 +195,7 @@ Widget totalCard({
   );
 }
 
-Widget qtyBtn(
-  IconData icon,
-  VoidCallback onTap,
-) {
+Widget qtyBtn(IconData icon, VoidCallback onTap) {
   return GestureDetector(
     onTap: onTap,
 
@@ -246,23 +204,14 @@ Widget qtyBtn(
       height: 34,
 
       decoration: BoxDecoration(
-
         gradient: const LinearGradient(
-          colors: [
-            Color(0xFFFFB067),
-            Color(0xFFFF8C42),
-          ],
+          colors: [Color(0xFFFFB067), Color(0xFFFF8C42)],
         ),
 
-        borderRadius:
-            BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10),
       ),
 
-      child: Icon(
-        icon,
-        size: 18,
-        color: Colors.white,
-      ),
+      child: Icon(icon, size: 18, color: Colors.white),
     ),
   );
 }

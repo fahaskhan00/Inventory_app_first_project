@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 class DeleteDialog extends StatelessWidget {
   final VoidCallback onDelete;
 
-  const DeleteDialog({
-    super.key,
-    required this.onDelete,
-  });
+  const DeleteDialog({super.key, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +20,7 @@ class DeleteDialog extends StatelessWidget {
             onDelete();
             Navigator.pop(context);
           },
-          child: Text(
-            "Delete",
-            style: TextStyle(color: Colors.red),
-          ),
+          child: Text("Delete", style: TextStyle(color: Colors.red)),
         ),
       ],
     );

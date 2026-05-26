@@ -8,10 +8,7 @@ class TermsContent extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Color(0xFF0D0D0D),
-            Color(0xFF1A1A1A),
-          ],
+          colors: [Color(0xFF0D0D0D), Color(0xFF1A1A1A)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -22,7 +19,6 @@ class TermsContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               _title("Last updated"),
               _text("May 02, 2026"),
 
@@ -31,7 +27,7 @@ class TermsContent extends StatelessWidget {
               _title("Overview"),
               _text(
                 "These Terms and Conditions govern your use of the myinventory application. "
-                "By using the app, you agree to comply with these terms."
+                "By using the app, you agree to comply with these terms.",
               ),
 
               const SizedBox(height: 20),
@@ -47,7 +43,7 @@ class TermsContent extends StatelessWidget {
               _title("Acceptance"),
               _text(
                 "By accessing or using the Service, you agree to be bound by these Terms. "
-                "If you disagree, you may not use the Service."
+                "If you disagree, you may not use the Service.",
               ),
 
               const SizedBox(height: 20),
@@ -59,35 +55,35 @@ class TermsContent extends StatelessWidget {
 
               _title("External Links"),
               _text(
-                "We are not responsible for third-party websites or services linked in the app."
+                "We are not responsible for third-party websites or services linked in the app.",
               ),
 
               const SizedBox(height: 20),
 
               _title("Third-Party Services"),
               _text(
-                "Any third-party content or services are not controlled by us and are used at your own risk."
+                "Any third-party content or services are not controlled by us and are used at your own risk.",
               ),
 
               const SizedBox(height: 20),
 
               _title("Termination"),
               _text(
-                "We may suspend or terminate access to the Service if you violate these terms."
+                "We may suspend or terminate access to the Service if you violate these terms.",
               ),
 
               const SizedBox(height: 20),
 
               _title("Limitation of Liability"),
               _text(
-                "We are not liable for indirect or incidental damages including data loss or business interruption."
+                "We are not liable for indirect or incidental damages including data loss or business interruption.",
               ),
 
               const SizedBox(height: 20),
 
               _title("Disclaimer"),
               _text(
-                "The Service is provided 'AS IS' without any warranties of any kind."
+                "The Service is provided 'AS IS' without any warranties of any kind.",
               ),
 
               const SizedBox(height: 20),
@@ -99,14 +95,14 @@ class TermsContent extends StatelessWidget {
 
               _title("Disputes"),
               _text(
-                "Disputes should first be resolved informally by contacting us."
+                "Disputes should first be resolved informally by contacting us.",
               ),
 
               const SizedBox(height: 20),
 
               _title("Changes"),
               _text(
-                "We may update these Terms at any time. Continued use means acceptance."
+                "We may update these Terms at any time. Continued use means acceptance.",
               ),
 
               const SizedBox(height: 20),
@@ -157,10 +153,7 @@ class TermsContent extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(
-                color: Colors.white70,
-                fontSize: 14,
-              ),
+              style: const TextStyle(color: Colors.white70, fontSize: 14),
             ),
           ),
         ],

@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/item_model.dart';
-import 'bill_preview_screen.dart';
-import '../widgets/sales_summary_widget.dart';
+import 'package:flutter_application_1/screens/customer_details.dart';
+import '../widgets/sales_summary_widget/appbar.dart';
+import '../widgets/sales_summary_widget/summary_item_list.dart';
+import '../widgets/sales_summary_widget/total_section.dart';
+import '../widgets/sales_summary_widget/confirm_button.dart';
 
 class SalesSummaryScreen extends StatefulWidget {
   final List<ItemModel> selectedItems;
+
   final String customerName;
+
   final String customerPhone;
-  final String customerAddress;
-  final String customerSalePrice;
 
   const SalesSummaryScreen({
     super.key,
     required this.selectedItems,
     required this.customerName,
     required this.customerPhone,
-    required this.customerAddress,
-    required this.customerSalePrice,
   });
 
   @override
@@ -53,283 +54,148 @@ class _SalesSummaryScreenState extends State<SalesSummaryScreen> {
 
   double get total => subtotal;
 
+  // REMOVE QUANTITY
+  void removeQuantity(int index, int qty) {
+    if (qty > 1) {
+      setState(() {
+        quantities[index] = qty - 1;
+      });
+    }
+  }
+
+  // ADD QUANTITY
+  void addQuantity(int index, int qty, int stock) {
+    if (qty < stock) {
+      setState(() {
+        quantities[index] = qty + 1;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Only $stock items available"),
+
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  // CHANGE QUANTITY
+  void changeQuantity(int index, int value) {
+    final stock = widget.selectedItems[index].quantity;
+
+    if (value <= 0) {
+      quantities[index] = 1;
+
+      setState(() {});
+
+      return;
+    }
+
+    if (value > stock) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Only $stock items available"),
+
+          backgroundColor: Colors.red,
+        ),
+      );
+
+      quantities[index] = stock;
+
+      setState(() {});
+
+      return;
+    }
+
+    setState(() {
+      quantities[index] = value;
+    });
+  }
+
+  // DELETE ITEM
+  void deleteItem(int index) {
+    setState(() {
+      widget.selectedItems.removeAt(index);
+
+      quantities.remove(index);
+    });
+  }
+
+  // GENERATE BILL
+  void generateBill() {
+    if (widget.selectedItems.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please add items"),
+
+          backgroundColor: Colors.red,
+        ),
+      );
+
+      return;
+    }
+
+    List updatedItems = [];
+
+    for (int i = 0; i < widget.selectedItems.length; i++) {
+      final item = widget.selectedItems[i];
+
+      final qty = quantities[i] ?? 1;
+
+      updatedItems.add({...item.toMap(), "qty": qty});
+    }
+
+    Navigator.push(
+      context,
+
+      MaterialPageRoute(
+        builder:
+            (_) => CustomerDetailsScreen(
+              selectedItems: widget.selectedItems,
+
+              updatedItems: updatedItems,
+
+              total: total,
+            ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F8FA),
 
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-
-        elevation: 0,
-
-        centerTitle: true,
-
-        iconTheme: const IconThemeData(color: Colors.black),
-
-        title: const Text(
-          "Sale Summary",
-
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-
-            color: Colors.black,
-
-            fontSize: 22,
-          ),
-        ),
-      ),
+      appBar: const SalesSummaryAppBar(),
 
       body: Column(
         children: [
-          /// ITEMS LIST
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
+            child: SalesSummaryItemList(
+              selectedItems: widget.selectedItems,
 
-              itemCount: widget.selectedItems.length,
+              quantities: quantities,
 
-              itemBuilder: (context, index) {
-                final item = widget.selectedItems[index];
+              onRemove: removeQuantity,
 
-                final qty = quantities[index] ?? 1;
+              onAdd: addQuantity,
 
-                final stock = item.quantity;
+              onQtyChanged: changeQuantity,
 
-                return saleItemTile(
-                  context: context,
-                  item: item,
-                  qty: qty,
-                  stock: stock,
-
-                  onRemove: () {
-                    if (qty > 1) {
-                      setState(() {
-                        quantities[index] = qty - 1;
-                      });
-                    }
-                  },
-
-              onAdd: () {
-
-  if (qty < stock) {
-
-    setState(() {
-      quantities[index] = qty + 1;
-    });
-
-  } else {
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content:
-            Text("Only $stock items available"),
-
-        backgroundColor: Colors.red,
-      ),
-    );
-  }
-},
-onQtyChanged: (value) {
-
-  setState(() {
-
-    quantities[index] = value;
-  });
-},
-
-                  onDelete: () {
-                    setState(() {
-                      widget.selectedItems.removeAt(index);
-
-                      quantities.remove(index);
-                    });
-                  },
-                );
-              },
+              onDelete: deleteItem,
             ),
           ),
 
-          /// TOTAL CARD
-          totalCard(
-            child: Column(
-              children: [
-                row("Subtotal", subtotal),
+          SalesTotalSection(
+            subtotal: subtotal,
 
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 14),
-
-                  child: Divider(color: Color(0xFFFFE0CC), height: 1),
-                ),
-
-                const SizedBox(height: 10),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                  children: [
-                    Text(
-                      "Customer",
-
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-
-                    Text(
-                      widget.customerName,
-
-                      style: const TextStyle(
-                        color: Colors.black,
-
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 14),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                  children: [
-                    Text(
-                      "Customer Price",
-
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-
-                    Text(
-                      widget.customerSalePrice.trim().isEmpty
-                          ? "Not Added"
-                          : "₹ ${widget.customerSalePrice}",
-
-                      style: const TextStyle(
-                        color: Colors.black,
-
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            customerName: widget.customerName,
           ),
 
-          /// BUTTON
-          Container(
-            width: double.infinity,
-
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 35),
-
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFF8C42),
-
-                foregroundColor: Colors.white,
-
-                elevation: 0,
-
-                padding: const EdgeInsets.symmetric(vertical: 18),
-
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
-                ),
-              ),
-
-              onPressed: () {
-                if (widget.selectedItems.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Please add items"),
-
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-
-                  return;
-                }
-
-                List updatedItems = [];
-
-                for (int i = 0; i < widget.selectedItems.length; i++) {
-                  final item = widget.selectedItems[i];
-
-                  final qty = quantities[i] ?? 1;
-
-                  updatedItems.add({...item.toMap(), "qty": qty});
-                }
-
-                Navigator.push(
-                  context,
-
-                  MaterialPageRoute(
-                    builder:
-                        (_) => BillPreviewScreen(
-                          items: updatedItems,
-
-                          total: total,
-
-                          customerName: widget.customerName,
-
-                          customerPhone: widget.customerPhone,
-
-                          customerAddress: widget.customerAddress,
-
-                          customerSalePrice: widget.customerSalePrice,
-                        ),
-                  ),
-                );
-              },
-
-              child: const Text(
-                "Confirm & Generate Bill",
-
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-            ),
-          ),
+          SalesConfirmButton(onTap: generateBill),
         ],
       ),
-    );
-  }
-
-  Widget row(String title, double value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-      children: [
-        Text(
-          title,
-
-          style: TextStyle(
-            color: Colors.grey.shade600,
-
-            fontWeight: FontWeight.w500,
-
-            fontSize: 14,
-          ),
-        ),
-
-        Text(
-          "₹ ${value.toStringAsFixed(0)}",
-
-          style: const TextStyle(
-            color: Colors.black,
-
-            fontWeight: FontWeight.w600,
-
-            fontSize: 15,
-          ),
-        ),
-      ],
     );
   }
 }
