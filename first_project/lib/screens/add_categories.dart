@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/colors/app_colors.dart';
 import 'package:flutter_application_1/widgets/custom_snackbar.dart';
 import 'package:flutter_application_1/services/database_hive.dart';
-
 import '../widgets/catagories_dart/catagories_header.dart';
 import '../widgets/catagories_dart/catagories_textfield.dart';
 import '../widgets/catagories_dart/catagories_button.dart';

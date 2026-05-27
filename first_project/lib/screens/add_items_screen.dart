@@ -8,16 +8,16 @@ import 'package:flutter_application_1/models/item_model.dart';
 import 'package:flutter_application_1/services/database_hive.dart';
 import 'package:flutter_application_1/widgets/custom_snackbar.dart';
 
-import 'package:flutter_application_1/widgets/add_item_widget_oldddddd/image_picker_box.dart';
-import 'package:flutter_application_1/widgets/add_item_widget_oldddddd/premium_field.dart';
-import 'package:flutter_application_1/widgets/add_item_widget_oldddddd/notes_box.dart';
+import 'package:flutter_application_1/widgets/add_item_widget/image_picker_box.dart';
+import 'package:flutter_application_1/widgets/add_item_widget/premium_field.dart';
+import 'package:flutter_application_1/widgets/add_item_widget/notes_box.dart';
 
-import 'package:flutter_application_1/widgets/add_item_widget_oldddddd/add_item_appbar.dart';
-import 'package:flutter_application_1/widgets/add_item_widget_oldddddd/image_preview_list.dart';
-import 'package:flutter_application_1/widgets/add_item_widget_oldddddd/catagory_dropdown.dart';
-import 'package:flutter_application_1/widgets/add_item_widget_oldddddd/quantity_section.dart';
-import 'package:flutter_application_1/widgets/add_item_widget_oldddddd/save_item_button.dart';
-import 'package:flutter_application_1/widgets/add_item_widget_oldddddd/image_picker_bottom_sheet.dart';
+import 'package:flutter_application_1/widgets/add_item_widget/add_item_appbar.dart';
+import 'package:flutter_application_1/widgets/add_item_widget/image_preview_list.dart';
+import 'package:flutter_application_1/widgets/add_item_widget/catagory_dropdown.dart';
+import 'package:flutter_application_1/widgets/add_item_widget/quantity_section.dart';
+import 'package:flutter_application_1/widgets/add_item_widget/save_item_button.dart';
+import 'package:flutter_application_1/widgets/add_item_widget/image_picker_bottom_sheet.dart';
 
 class AddItemScreen extends StatefulWidget {
   final bool isEdit;

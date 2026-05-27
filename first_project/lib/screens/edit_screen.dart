@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_application_1/colors/app_colors.dart';
 import 'package:flutter_application_1/models/item_model.dart';
 import 'package:flutter_application_1/services/database_hive.dart';
-import 'package:flutter_application_1/widgets/add_item_widget_oldddddd/premium_field.dart';
+import 'package:flutter_application_1/widgets/add_item_widget/premium_field.dart';
 import 'package:flutter_application_1/widgets/edit_screen_widget/appbar.dart';
 import 'package:flutter_application_1/widgets/edit_screen_widget/image_section.dart';
 import 'package:flutter_application_1/widgets/edit_screen_widget/notes_field.dart';

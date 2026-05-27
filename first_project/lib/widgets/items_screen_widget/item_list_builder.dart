@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/screens/detail_screen.dart';
-import 'package:flutter_application_1/services/database_hive.dart';
 
 import '../items_widgets.dart';
 

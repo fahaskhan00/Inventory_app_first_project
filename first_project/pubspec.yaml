@@ -35,3 +35,6 @@ flutter:
 
   assets:
     - assets/images/favicon.png
+    - assets/images/invfirstr.png
+    - assets/images/invsecondr.png
+    - assets/images/invthirdr.png
