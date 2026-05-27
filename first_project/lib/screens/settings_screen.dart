@@ -1,15 +1,15 @@
+//==================== settings_screen.dart ====================//
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/privacy_policy.dart';
 import 'package:flutter_application_1/screens/terms_condition.dart';
+import 'package:flutter_application_1/services/settings_services.dart';
 
-class SettingsScreen extends StatefulWidget {
+import 'package:flutter_application_1/widgets/settings_widget/settings_tile.dart';
+
+class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +40,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
         child: Column(
           children: [
-            /// TERMS
-            settingTile(
+            //==================== TERMS & CONDITIONS ====================//
+            SettingsTile(
               title: "Terms & Conditions",
 
               icon: Icons.description_rounded,
@@ -57,8 +57,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
             const SizedBox(height: 14),
 
-            /// PRIVACY
-            settingTile(
+            //==================== PRIVACY POLICY ====================//
+            SettingsTile(
               title: "Privacy Policy",
 
               icon: Icons.privacy_tip_rounded,
@@ -71,75 +71,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
               },
             ),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Widget settingTile({
-    required String title,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
+            const SizedBox(height: 14),
 
-      child: Container(
-        padding: const EdgeInsets.all(18),
+            //==================== CLEAR ALL DATA ====================//
+            SettingsTile(
+              title: "Clear All Data",
 
-        decoration: BoxDecoration(
-          color: Colors.white,
+              icon: Icons.delete_forever_rounded,
 
-          borderRadius: BorderRadius.circular(22),
+              iconColor: Colors.red,
 
-          boxShadow: [
-            BoxShadow(
-              color: Colors.orange.withOpacity(0.08),
-
-              blurRadius: 14,
-
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFF3E8),
-
-                borderRadius: BorderRadius.circular(14),
-              ),
-
-              child: Icon(icon, color: const Color(0xFFFF8C42)),
-            ),
-
-            const SizedBox(width: 14),
-
-            Expanded(
-              child: Text(
-                title,
-
-                style: const TextStyle(
-                  color: Colors.black,
-
-                  fontWeight: FontWeight.w600,
-
-                  fontSize: 15,
-                ),
-              ),
-            ),
-
-            Icon(
-              Icons.arrow_forward_ios_rounded,
-
-              color: Colors.grey.shade500,
-
-              size: 18,
+              onTap: () {
+                SettingsService.showClearDialog(context);
+              },
             ),
           ],
         ),

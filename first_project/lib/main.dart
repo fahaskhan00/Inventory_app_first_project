@@ -4,12 +4,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Hive.initFlutter();
   await Hive.openBox('categoriesBox');
   await Hive.openBox('itemsBox');
   await Hive.openBox('salesBox');
-   await Hive.openBox('appBox');
+  await Hive.openBox('appBox');
+  await Hive.openBox('productBox');
   runApp(const MyApp());
 }
 
