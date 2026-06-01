@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/colors/app_colors.dart';
 import 'package:flutter_application_1/models/item_model.dart';
 
-class SalesItemTile
-    extends StatelessWidget {
+class SalesItemTile extends StatelessWidget {
   final ItemModel item;
 
   final bool isSelected;
@@ -22,160 +21,189 @@ class SalesItemTile
 
   @override
   Widget build(BuildContext context) {
+    Color statusColor;
+    String statusText;
+
+    if (item.quantity == 0) {
+      statusColor = Colors.red;
+      statusText = "Out of Stock";
+    } else if (item.quantity < 5) {
+      statusColor = Colors.orange;
+      statusText = "Low Stock";
+    } else {
+      statusColor = Colors.green;
+      statusText = "In Stock";
+    }
+
     return GestureDetector(
       onTap: onTap,
 
-      child: Container(
-        margin:
-            const EdgeInsets.only(bottom: 16),
+      child: Opacity(
+        opacity: item.quantity == 0 ? 0.7 : 1,
 
-        padding: const EdgeInsets.all(16),
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 16),
 
-        decoration: BoxDecoration(
-          color: AppColors.white,
+          padding: const EdgeInsets.all(16),
 
-          borderRadius:
-              BorderRadius.circular(22),
+          decoration: BoxDecoration(
+            color: AppColors.white,
 
-          border: Border.all(
-            color:
-                isSelected
-                    ? AppColors.primary
-                    : Colors.transparent,
+            borderRadius: BorderRadius.circular(22),
 
-            width: 1.5,
+            border: Border.all(
+              color:
+                  isSelected
+                      ? AppColors.primary
+                      : Colors.transparent,
+
+              width: 1.5,
+            ),
+
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withOpacity(0.08),
+
+                blurRadius: 14,
+
+                offset: const Offset(0, 6),
+              ),
+            ],
           ),
 
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary
-                  .withOpacity(0.08),
+          child: Row(
+            children: [
+              Container(
+                width: 70,
+                height: 70,
 
-              blurRadius: 14,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
 
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
+                  color: AppColors.lightOrange,
 
-        child: Row(
-          children: [
-            buildImage(),
+                  image:
+                      item.images.isNotEmpty
+                          ? DecorationImage(
+                            image: FileImage(
+                              File(item.images[0]),
+                            ),
 
-            const SizedBox(width: 14),
+                            fit: BoxFit.cover,
+                          )
+                          : null,
+                ),
+              ),
 
-            buildItemDetails(),
+              const SizedBox(width: 14),
 
-            buildSelectButton(),
-          ],
-        ),
-      ),
-    );
-  }
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
 
-  Widget buildImage() {
-    return Container(
-      width: 70,
-      height: 70,
+                  children: [
+                    Text(
+                      item.name,
 
-      decoration: BoxDecoration(
-        borderRadius:
-            BorderRadius.circular(16),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.black,
+                        fontSize: 16,
+                      ),
+                    ),
 
-        color: AppColors.lightOrange,
+                    const SizedBox(height: 6),
 
-        image:
-            item.images.isNotEmpty
-                ? DecorationImage(
-                  image: FileImage(
-                    File(item.images[0]),
-                  ),
+                    Text(
+                      "QTY: ${item.quantity}",
 
-                  fit: BoxFit.cover,
-                )
-                : null,
-      ),
-    );
-  }
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 13,
+                      ),
+                    ),
 
-  Widget buildItemDetails() {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
+                    const SizedBox(height: 6),
 
-        children: [
-          Text(
-            item.name,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
 
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: AppColors.black,
-              fontSize: 16,
-            ),
-          ),
+                      decoration: BoxDecoration(
+                        color: statusColor.withOpacity(0.1),
 
-          const SizedBox(height: 6),
+                        borderRadius:
+                            BorderRadius.circular(8),
+                      ),
 
-          Text(
-            "QTY: ${item.quantity}",
+                      child: Text(
+                        statusText,
 
-            style: TextStyle(
-              color: Colors.grey.shade600,
-              fontSize: 13,
-            ),
-          ),
+                        style: TextStyle(
+                          color: statusColor,
+                          fontSize: 11,
+                          fontWeight:
+                              FontWeight.w600,
+                        ),
+                      ),
+                    ),
 
-          const SizedBox(height: 8),
+                    const SizedBox(height: 8),
 
-          Text(
-            "₹ ${item.price}",
+                    Text(
+                      "₹ ${item.price}",
 
-            style: const TextStyle(
-              color: AppColors.primary,
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildSelectButton() {
-    return Container(
-      width: 40,
-      height: 40,
-
-      decoration: BoxDecoration(
-        gradient:
-            isSelected
-                ? const LinearGradient(
-                  colors: [
-                    AppColors.secondary,
-                    AppColors.primary,
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
                   ],
-                )
-                : null,
+                ),
+              ),
 
-        color:
-            isSelected
-                ? null
-                : AppColors.lightOrange,
+              Container(
+                width: 40,
+                height: 40,
 
-        borderRadius:
-            BorderRadius.circular(14),
-      ),
+                decoration: BoxDecoration(
+                  gradient:
+                      isSelected
+                          ? const LinearGradient(
+                            colors: [
+                              AppColors.secondary,
+                              AppColors.primary,
+                            ],
+                          )
+                          : null,
 
-      child: Icon(
-        isSelected
-            ? Icons.check
-            : Icons.add,
+                  color:
+                      isSelected
+                          ? null
+                          : AppColors.lightOrange,
 
-        color:
-            isSelected
-                ? AppColors.white
-                : AppColors.primary,
+                  borderRadius:
+                      BorderRadius.circular(14),
+                ),
+
+                child: Icon(
+                  isSelected
+                      ? Icons.check
+                      : Icons.add,
+
+                  color:
+                      isSelected
+                          ? AppColors.white
+                          : AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

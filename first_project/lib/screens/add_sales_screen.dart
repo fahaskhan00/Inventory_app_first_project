@@ -12,6 +12,7 @@ import 'package:flutter_application_1/widgets/add_sales_widgets.dart/sales_botto
 
 class AddSalesScreen extends StatefulWidget {
   final String customerName;
+  
 
   final String customerPhone;
 
@@ -31,6 +32,7 @@ class AddSalesScreen extends StatefulWidget {
 class _AddSalesScreenState extends State<AddSalesScreen> {
   // DATABASE
   final db = DatabaseApp.instance;
+  String selectedFilter = 'All';
 
   // SELECTED ITEMS
   List<ItemModel> selectedItems = [];
@@ -118,11 +120,97 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   }
 
   // FILTER ITEMS
-  List<ItemModel> getFilteredItems(List<ItemModel> items) {
-    return items.where((item) {
-      return item.name.toLowerCase().contains(searchQuery.toLowerCase());
-    }).toList();
-  }
+List<ItemModel> getFilteredItems(
+  List<ItemModel> items,
+) {
+  return items.where((item) {
+    final matchesSearch =
+        item.name.toLowerCase().contains(
+              searchQuery.toLowerCase(),
+            );
+
+    bool matchesFilter = true;
+
+    switch (selectedFilter) {
+      case 'Low Stock':
+        matchesFilter =
+            item.quantity > 0 &&
+            item.quantity < 5;
+        break;
+
+      case 'Out of Stock':
+        matchesFilter =
+            item.quantity == 0;
+        break;
+
+      default:
+        matchesFilter = true;
+    }
+
+    return matchesSearch &&
+        matchesFilter;
+  }).toList();
+}
+
+  // FILTER ITEMS
+  Widget buildFilterSection() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(
+      horizontal: 16,
+      vertical: 8,
+    ),
+    child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          ChoiceChip(
+            label: const Text('All'),
+            selected:
+                selectedFilter == 'All',
+            onSelected: (_) {
+              setState(() {
+                selectedFilter = 'All';
+              });
+            },
+          ),
+
+          const SizedBox(width: 8),
+
+          ChoiceChip(
+            label:
+                const Text('Low Stock'),
+            selected:
+                selectedFilter ==
+                    'Low Stock',
+            onSelected: (_) {
+              setState(() {
+                selectedFilter =
+                    'Low Stock';
+              });
+            },
+          ),
+
+          const SizedBox(width: 8),
+
+          ChoiceChip(
+            label: const Text(
+              'Out of Stock',
+            ),
+            selected:
+                selectedFilter ==
+                    'Out of Stock',
+            onSelected: (_) {
+              setState(() {
+                selectedFilter =
+                    'Out of Stock';
+              });
+            },
+          ),
+        ],
+      ),
+    ),
+  );
+}
 
   // APP BAR
   PreferredSizeWidget buildAppBar() {
@@ -188,21 +276,27 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   }
 
   // BODY
-  Widget buildBody() {
-    final items = getItems();
+ Widget buildBody() {
+  final items = getItems();
 
-    final filteredItems = getFilteredItems(items);
+  final filteredItems =
+      getFilteredItems(items);
 
-    return Column(
-      children: [
-        buildSearchField(),
+  return Column(
+    children: [
+      buildSearchField(),
 
-        buildItemsList(filteredItems, items),
+      buildFilterSection(),
 
-        buildBottomButton(),
-      ],
-    );
-  }
+      buildItemsList(
+        filteredItems,
+        items,
+      ),
+
+      buildBottomButton(),
+    ],
+  );
+}
 
   @override
   Widget build(BuildContext context) {

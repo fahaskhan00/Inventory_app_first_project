@@ -22,60 +22,54 @@ class DashboardStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
+    return GestureDetector(
+      onTap: onTap,
 
-        child: Container(
-          padding: const EdgeInsets.all(16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
 
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 244, 232, 232),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 244, 232, 232),
 
-            borderRadius: BorderRadius.circular(22),
+          borderRadius: BorderRadius.circular(22),
 
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.04),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
 
-                blurRadius: 10,
+              blurRadius: 10,
 
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
 
-            children: [
-              CircleAvatar(
-                backgroundColor: color.withOpacity(0.12),
+          children: [
+            CircleAvatar(
+              backgroundColor: color.withOpacity(0.12),
 
-                child: Icon(icon, color: color),
-              ),
+              child: Icon(icon, color: color),
+            ),
 
-              const SizedBox(height: 14),
+            const SizedBox(height: 14),
 
-              Text(
-                value,
+            Text(
+              value,
 
-                style: const TextStyle(
-                  fontSize: 22,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
 
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            const SizedBox(height: 4),
 
-              const SizedBox(height: 4),
+            Text(
+              title,
 
-              Text(
-                title,
-
-                style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
-              ),
-            ],
-          ),
+              style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+            ),
+          ],
         ),
       ),
     );
