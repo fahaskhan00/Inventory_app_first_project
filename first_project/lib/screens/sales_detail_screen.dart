@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/services/invoice_services.dart';
 import '../colors/app_colors.dart';
 import '../widgets/sales_details_widget/appbar.dart';
 import '../widgets/sales_details_widget/total_card.dart';
@@ -25,7 +26,46 @@ class SalesDetailScreen extends StatelessWidget {
 
         child: Column(
           children: [
-            SalesTotalCard(sale: sale, items: items),
+         SalesTotalCard(
+  sale: sale,
+  items: items,
+),
+
+const SizedBox(height: 16),
+
+SizedBox(
+  width: double.infinity,
+
+  child: ElevatedButton.icon(
+   onPressed: () async {
+  final success =
+      await InvoiceService.downloadInvoice(
+    sale: sale,
+  );
+
+  ScaffoldMessenger.of(context)
+      .showSnackBar(
+    SnackBar(
+      content: Text(
+        success
+            ? 'Invoice downloaded successfully'
+            : 'Failed to download invoice',
+      ),
+    ),
+  );
+},
+
+    icon: const Icon(
+      Icons.download,
+    ),
+
+    label: const Text(
+      'Download Invoice',
+    ),
+  ),
+),
+
+const SizedBox(height: 22),
 
             const SizedBox(height: 22),
 

@@ -177,7 +177,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
   Widget buildSalePriceField() {
     return premiumField(
-      "₹ 80",
+      "₹ 80", 
       salePriceController,
       Icons.sell_outlined,
       label: 'Sale Price (Optional)',
