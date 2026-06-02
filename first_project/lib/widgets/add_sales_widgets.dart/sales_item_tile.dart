@@ -190,16 +190,20 @@ class SalesItemTile extends StatelessWidget {
                       BorderRadius.circular(14),
                 ),
 
-                child: Icon(
-                  isSelected
-                      ? Icons.check
-                      : Icons.add,
+               child: Icon(
+  item.quantity == 0
+      ? Icons.close
+      : isSelected
+          ? Icons.check
+          : Icons.add,
 
-                  color:
-                      isSelected
-                          ? AppColors.white
-                          : AppColors.primary,
-                ),
+  color:
+      item.quantity == 0
+          ? Colors.red
+          : isSelected
+              ? AppColors.white
+              : AppColors.primary,
+),
               ),
             ],
           ),
