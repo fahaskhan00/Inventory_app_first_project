@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 class InvoiceService {
   static Future<bool> downloadInvoice({
@@ -58,7 +59,6 @@ class InvoiceService {
                 'Product',
                 'Price',
               ],
-
               data: items.map((item) {
                 return [
                   item['name'].toString(),
@@ -91,6 +91,12 @@ class InvoiceService {
 
       await file.writeAsBytes(
         await pdf.save(),
+      );
+
+      await Printing.layoutPdf(
+        onLayout: (format) async {
+          return await pdf.save();
+        },
       );
 
       print(
