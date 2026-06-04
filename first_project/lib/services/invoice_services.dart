@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 
 class InvoiceService {
   static Future<bool> downloadInvoice({
@@ -12,6 +11,8 @@ class InvoiceService {
       final pdf = pw.Document();
 
       final List items = sale['items'] ?? [];
+
+      print('Items: $items');
 
       pdf.addPage(
         pw.MultiPage(
@@ -59,6 +60,7 @@ class InvoiceService {
                 'Product',
                 'Price',
               ],
+
               data: items.map((item) {
                 return [
                   item['name'].toString(),
@@ -82,9 +84,10 @@ class InvoiceService {
         ),
       );
 
-      final directory =
-          await getApplicationDocumentsDirectory();
-
+     final directory =
+    Directory(
+      '/storage/emulated/0/Download',
+    );
       final file = File(
         '${directory.path}/invoice_${DateTime.now().millisecondsSinceEpoch}.pdf',
       );
@@ -92,16 +95,11 @@ class InvoiceService {
       await file.writeAsBytes(
         await pdf.save(),
       );
-
-      await Printing.layoutPdf(
-        onLayout: (format) async {
-          return await pdf.save();
-        },
-      );
-
       print(
-        'Invoice Saved : ${file.path}',
-      );
+  'Saved to: ${file.path}',
+);
+
+    
 
       return true;
     } catch (e) {
