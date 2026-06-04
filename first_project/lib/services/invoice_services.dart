@@ -72,7 +72,7 @@ class InvoiceService {
             pw.Divider(),
 
             pw.Text(
-              'Total Amount : ₹${sale['total']}',
+              'Total Amount : Rs.${sale['total']}',
               style: pw.TextStyle(
                 fontSize: 18,
                 fontWeight: pw.FontWeight.bold,
