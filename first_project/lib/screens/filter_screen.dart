@@ -22,6 +22,7 @@ class _FilterScreenState extends State<FilterScreen> {
   int selectedStock = 0;
 
   int selectedCategory = -1;
+  int selectedPrice = 0;
 
   final List<String> sortOptions = [
     "Name (A-Z)",
