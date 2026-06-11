@@ -33,6 +33,13 @@ class _FilterScreenState extends State<FilterScreen> {
   List<String> categories = [];
 
   final List<String> stockOptions = ["All", "In Stock", "Low Stock"];
+  final List<String> priceOptions = [
+    "All",
+    "Below ₹1,000",
+    "₹1,000 - ₹5,000",
+    "₹5,000 - ₹10,000",
+    "Above ₹10,000",
+  ];
 
   @override
   void initState() {
@@ -59,6 +66,8 @@ class _FilterScreenState extends State<FilterScreen> {
 
       "stock": selectedStock,
 
+      "price": selectedPrice,
+
       "category": selectedCategory == -1 ? null : categories[selectedCategory],
     });
   }
@@ -69,6 +78,8 @@ class _FilterScreenState extends State<FilterScreen> {
       selectedSort = 0;
 
       selectedStock = 0;
+
+      selectedPrice = 0;
 
       selectedCategory = -1;
     });
@@ -151,6 +162,30 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
+  Widget buildPriceSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+
+      children: [
+        const FilterSectionTitle(title: "PRICE RANGE"),
+
+        const SizedBox(height: 12),
+
+        FilterChipWrap(
+          list: priceOptions,
+
+          selectedIndex: selectedPrice,
+
+          onTap: (i) {
+            setState(() {
+              selectedPrice = i;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
   // BOTTOM BUTTONS
   Widget buildBottomButtons() {
     return Row(
@@ -195,6 +230,10 @@ class _FilterScreenState extends State<FilterScreen> {
                 const SizedBox(height: 24),
 
                 buildStockSection(),
+
+                const SizedBox(height: 24),
+
+                buildPriceSection(),
               ],
             ),
           ),
