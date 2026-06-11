@@ -30,6 +30,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
   int filterSort = 0;
 
   int filterStock = 0;
+  int filterPrice = 0;
 
   // OPEN FILTER
   Future<void> openFilter() async {
@@ -50,6 +51,8 @@ class _ItemsScreenState extends State<ItemsScreen> {
         filterCategory = result["category"];
 
         filterStock = result["stock"];
+
+filterPrice = result["price"];
       });
     }
   }
@@ -151,24 +154,26 @@ class _ItemsScreenState extends State<ItemsScreen> {
 
             Expanded(
               child: ItemListSection(
-                db: db,
+  db: db,
 
-                selectedIndex: selectedIndex,
+  selectedIndex: selectedIndex,
 
-                filterCategory: filterCategory,
+  filterCategory: filterCategory,
 
-                filterSort: filterSort,
+  filterSort: filterSort,
 
-                filterStock: filterStock,
+  filterStock: filterStock,
 
-                searchQuery: searchQuery,
+  filterPrice: filterPrice,
 
-                onTap: goToDetail,
+  searchQuery: searchQuery,
 
-                onLongPress: (originalIndex) {
-                  deleteItem(db, originalIndex);
-                },
-              ),
+  onTap: goToDetail,
+
+  onLongPress: (originalIndex) {
+    deleteItem(db, originalIndex);
+  },
+),
             ),
           ],
         ),
