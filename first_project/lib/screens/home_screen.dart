@@ -47,19 +47,82 @@ class _HomeScreenState extends State<HomeScreen> {
       currentIndex = index;
     });
   }
+@override
+Widget build(BuildContext context) {
+  final isDesktop =
+      MediaQuery.of(context).size.width > 900;
 
-  @override
-  Widget build(BuildContext context) {
+  if (isDesktop) {
     return Scaffold(
-      body: screens[currentIndex],
+      body: Row(
+        children: [
+          NavigationRail(
+            selectedIndex: currentIndex,
 
-      bottomNavigationBar: HomeBottomNavbar(
-        currentIndex: currentIndex,
+            onDestinationSelected: changeTab,
 
-        onTap: changeTab,
+            labelType:
+                NavigationRailLabelType.all,
+
+            backgroundColor:
+                AppColors.bottomNav,
+
+            selectedIconTheme:
+                const IconThemeData(
+                  color: AppColors.primary,
+                ),
+
+            destinations: const [
+              NavigationRailDestination(
+                icon: Icon(Icons.home),
+                label: Text('Home'),
+              ),
+
+              NavigationRailDestination(
+                icon: Icon(Icons.list),
+                label: Text('Items'),
+              ),
+
+              NavigationRailDestination(
+                icon: Icon(Icons.category),
+                label: Text('Categories'),
+              ),
+
+              NavigationRailDestination(
+                icon: Icon(Icons.bar_chart),
+                label: Text('Sales'),
+              ),
+
+              NavigationRailDestination(
+                icon: Icon(Icons.settings),
+                label: Text('Settings'),
+              ),
+            ],
+          ),
+
+          const VerticalDivider(
+            thickness: 1,
+            width: 1,
+          ),
+
+          Expanded(
+            child: screens[currentIndex],
+          ),
+        ],
       ),
     );
   }
+
+  return Scaffold(
+    body: screens[currentIndex],
+
+    bottomNavigationBar: HomeBottomNavbar(
+      currentIndex: currentIndex,
+
+      onTap: changeTab,
+    ),
+  );
+}
 }
 
 class HomeUI extends StatelessWidget {
