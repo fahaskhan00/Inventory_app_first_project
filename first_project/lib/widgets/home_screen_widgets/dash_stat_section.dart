@@ -25,19 +25,33 @@ class DashboardStatsSection
     required this.onLowStockTap,
     required this.onOutStockTap,
   });
+@override
+Widget build(BuildContext context) {
+  final isDesktop =
+      MediaQuery.of(context).size.width > 900;
 
-  @override
-  Widget build(BuildContext context) {
+  if (isDesktop) {
     return Column(
       children: [
-        buildTopCards(),
-
-        const SizedBox(height: 12),
-
-        buildBottomCards(),
+        Row(
+          children: [
+            Expanded(child: buildTopCards()),
+            const SizedBox(width: 12),
+            Expanded(child: buildBottomCards()),
+          ],
+        ),
       ],
     );
   }
+
+  return Column(
+    children: [
+      buildTopCards(),
+      const SizedBox(height: 12),
+      buildBottomCards(),
+    ],
+  );
+}
 
   // TOP CARDS
   Widget buildTopCards() {
